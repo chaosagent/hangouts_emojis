@@ -1,5 +1,7 @@
 import glob
+import sys
 from PIL import Image
+
 filenames = glob.glob('128/emoji_*.png')
 emojis = [filename[11:-4] for filename in filenames]
 
@@ -7,14 +9,14 @@ EMOJI_SIZE = 128
 ROW_WIDTH = 255
 
 STYLE_TEMPLATE = '''.e{code} {{
-	background: no-repeat url(https://github.com/chaosagent/hangouts_emojis/raw/master/spritemap.png) -{pos_x}px, -{pos_y}px !important;
+	background: no-repeat url(https://github.com/chaosagent/hangouts_emojis/raw/master/spritemap.png) -{pos_x}px -{pos_y}px !important;
 	background-size: {size_x}px {size_y}px !important;
 }}'''
 
 image = Image.new('RGBA', (EMOJI_SIZE * ROW_WIDTH, EMOJI_SIZE * (len(emojis) // ROW_WIDTH + (1 if len(emojis) % ROW_WIDTH else 0))))
 styles = []
 
-DISPLAY_SIZE = 48
+DISPLAY_SIZE = int(sys.argv[1])
 
 for i, (filename, emoji) in enumerate(zip(filenames, emojis)):
 	this_im = Image.open(filename)
@@ -33,5 +35,5 @@ for i, (filename, emoji) in enumerate(zip(filenames, emojis)):
 image.save('spritemap.png')
 
 open('emoji_list.json', 'w').write(repr(emojis))
-open('emojis.css', 'w').write('\n'.join(styles))
+open('emojis_{}px.css'.format(DISPLAY_SIZE), 'w').write('\n'.join(styles))
 
