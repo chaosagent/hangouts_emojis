@@ -4,20 +4,23 @@ filenames = glob.glob('128/emoji_*.png')
 emojis = [filename[11:-4] for filename in filenames]
 
 EMOJI_SIZE = 128
+ROW_WIDTH = 255
 
 STYLE_TEMPLATE = '''.e{code} {{
-	background: no-repeat url(http://chaosagent.io/emoji_spritemap.png) 0px, -{position}px !important;
+	background: no-repeat url(https://github.com/chaosagent/hangouts_emojis/raw/master/spritemap.png) -{pos_x}px, -{pos_y}px !important;
 	background-size: cover !important;
 }}'''
 
-image = Image.new('RGBA', (EMOJI_SIZE, EMOJI_SIZE * len(emojis)))
+image = Image.new('RGBA', (EMOJI_SIZE * ROW_WIDTH, EMOJI_SIZE * (len(emojis) // ROW_WIDTH + (1 if len(emojis) % ROW_WIDTH else 0))))
 styles = []
 
 for i, (filename, emoji) in enumerate(zip(filenames, emojis)):
 	this_im = Image.open(filename)
-	box = (0, EMOJI_SIZE * i, EMOJI_SIZE, EMOJI_SIZE * (i + 1))
+	left = EMOJI_SIZE * (i % ROW_WIDTH)
+	top = EMOJI_SIZE * (i // ROW_WIDTH)
+	box = (left, top, left + EMOJI_SIZE, top + EMOJI_SIZE)
 	image.paste(this_im.crop((0, 0, EMOJI_SIZE, EMOJI_SIZE)), box)
-	styles.append(STYLE_TEMPLATE.format(code=emoji, position=EMOJI_SIZE * i))
+	styles.append(STYLE_TEMPLATE.format(code=emoji, pos_x=left, pos_y=top))
 
 image.save('spritemap.png')
 
