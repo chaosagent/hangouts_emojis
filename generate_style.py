@@ -8,7 +8,7 @@ ROW_WIDTH = 255
 
 STYLE_TEMPLATE = '''.e{code} {{
 	background: no-repeat url(https://github.com/chaosagent/hangouts_emojis/raw/master/spritemap.png) -{pos_x}px, -{pos_y}px !important;
-	background-size: {size_x} {size_y} !important;
+	background-size: {size_x}px {size_y}px !important;
 }}'''
 
 image = Image.new('RGBA', (EMOJI_SIZE * ROW_WIDTH, EMOJI_SIZE * (len(emojis) // ROW_WIDTH + (1 if len(emojis) % ROW_WIDTH else 0))))
