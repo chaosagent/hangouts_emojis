@@ -27,7 +27,7 @@ for i, (filename, emoji) in enumerate(zip(filenames, emojis)):
 		pos_x=left * DISPLAY_SIZE // EMOJI_SIZE,
 		pos_y=top * DISPLAY_SIZE // EMOJI_SIZE,
 		size_x=image.size[0] * DISPLAY_SIZE // EMOJI_SIZE,
-		size_y=image.size[0] * DISPLAY_SIZE // EMOJI_SIZE,
+		size_y=image.size[1] * DISPLAY_SIZE // EMOJI_SIZE,
 	))
 
 image.save('spritemap.png')
