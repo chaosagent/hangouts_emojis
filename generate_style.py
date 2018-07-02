@@ -24,10 +24,10 @@ for i, (filename, emoji) in enumerate(zip(filenames, emojis)):
 	image.paste(this_im.crop((0, 0, EMOJI_SIZE, EMOJI_SIZE)), box)
 	styles.append(STYLE_TEMPLATE.format(
 		code=emoji,
-		pos_x=left * DISPLAY_SIZE / EMOJI_SIZE,
-		pos_y=top * DISPLAY_SIZE / EMOJI_SIZE,
-		size_x=image.size[0] * DISPLAY_SIZE / EMOJI_SIZE,
-		size_y=image.size[0] * DISPLAY_SIZE / EMOJI_SIZE,
+		pos_x=left * DISPLAY_SIZE // EMOJI_SIZE,
+		pos_y=top * DISPLAY_SIZE // EMOJI_SIZE,
+		size_x=image.size[0] * DISPLAY_SIZE // EMOJI_SIZE,
+		size_y=image.size[0] * DISPLAY_SIZE // EMOJI_SIZE,
 	))
 
 image.save('spritemap.png')
